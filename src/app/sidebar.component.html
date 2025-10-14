@@ -1,0 +1,29 @@
+<aside class="sidebar glass shadow-soft rounded-xxl p-3 d-flex flex-column">
+  <div class="sidebar-header d-flex align-items-center mb-4">
+    <img src="assets/avatar.png" alt="User" class="avatar rounded-circle me-2" style="width:40px;height:40px;">
+    <div>
+      <div class="fw-bold">Timotheus Bendan</div>
+      <div class="text-muted-600 small">Admin</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav flex-grow-1">
+    <a class="nav-link d-flex align-items-center gap-2 mb-2" routerLink="/dashboard">
+      <span class="material-icons">dashboard</span> Dashboard
+    </a>
+    <a class="nav-link d-flex align-items-center gap-2 mb-2" routerLink="/tasks">
+      <span class="material-icons">task</span> Tasks
+    </a>
+    <a class="nav-link d-flex align-items-center gap-2 mb-2" routerLink="/calendar">
+      <span class="material-icons">calendar_today</span> Calendar
+    </a>
+    <a class="nav-link d-flex align-items-center gap-2 mb-2" routerLink="/chats">
+      <span class="material-icons">chat</span> Chats
+    </a>
+    <a class="nav-link d-flex align-items-center gap-2 mb-2" routerLink="/profile">
+      <span class="material-icons">person</span> Profile
+    </a>
+  </nav>
+  <div class="sidebar-footer mt-4">
+    <button class="btn btn-accent w-100 rounded-xl hover-lift">Add Task</button>
+  </div>
+</aside>

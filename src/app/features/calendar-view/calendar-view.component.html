@@ -1,0 +1,18 @@
+<div class="container py-4">
+  <div class="card border-0 rounded-xxl shadow-soft glass overflow-hidden">
+    <div class="card-header bg-light border-0 py-3 d-flex justify-content-between align-items-center rounded-top-xxl">
+      <div class="d-flex align-items-center gap-2">
+        <i class="material-icons text-accent">calendar_today</i>
+        <h2 class="h5 m-0">Task Calendar</h2>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-light btn-sm hover-lift" (click)="viewPrev()"><i class="material-icons">chevron_left</i></button>
+        <button class="btn btn-light btn-sm hover-lift" (click)="viewNext()"><i class="material-icons">chevron_right</i></button>
+        <button class="btn btn-accent btn-sm hover-lift" (click)="viewToday()">Today</button>
+      </div>
+    </div>
+    <div class="card-body p-3">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+</div>

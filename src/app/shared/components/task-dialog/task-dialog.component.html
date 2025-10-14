@@ -1,75 +1,124 @@
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-lg w-full max-w-md p-6">
-    <h2 class="text-xl font-semibold mb-4">{{ task.id ? 'Edit' : 'Add' }} Task</h2>
-    
-    <form (ngSubmit)="onSubmit()" #taskForm="ngForm" class="space-y-4">
-      <div>
-        <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          [(ngModel)]="taskCopy.title"
-          required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
+<div class="modal d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 rounded-xxl shadow-soft glass slide-up">
+  <div class="modal-header bg-light border-bottom-0 rounded-top-xxl">
+        <h5 class="modal-title fw-bold">
+          <span class="material-icons align-middle me-2">{{ task.id ? 'edit_note' : 'add_task' }}</span>
+          {{ task.id ? 'Edit' : 'Create New' }} Task
+        </h5>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
       </div>
+      
+      <form (ngSubmit)="onSubmit()" #taskForm="ngForm">
+  <div class="modal-body p-4">
+          <div class="mb-4">
+            <label for="title" class="form-label text-secondary fw-medium">Title</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light">
+                <span class="material-icons text-secondary">title</span>
+              </span>
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="title"
+                name="title"
+                [(ngModel)]="taskCopy.title"
+                required
+                placeholder="Enter a descriptive title"
+                #titleInput="ngModel"
+              />
+            </div>
+            <div class="text-danger small mt-1" *ngIf="titleInput.invalid && (titleInput.dirty || titleInput.touched)">
+              Title is required
+            </div>
+          </div>
 
-      <div>
-        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-        <quill-editor
-          [(ngModel)]="taskCopy.description"
-          name="description"
-          [modules]="quillConfig"
-          required
-          [styles]="{ height: '150px' }"
-        ></quill-editor>
-      </div>
+          <div class="mb-4">
+            <label for="description" class="form-label text-secondary fw-medium">Description</label>
+            <div class="border-subtle rounded-xl overflow-hidden shadow-soft">
+              <quill-editor
+                class="content-editor"
+                [(ngModel)]="taskCopy.description"
+                name="description"
+                [modules]="quillConfig.modules"
+                [formats]="quillConfig.formats"
+                [placeholder]="quillConfig.placeholder"
+                [styles]="{ minHeight: '200px' }"
+                [theme]="quillConfig.theme"
+                [required]="true" 
+              ></quill-editor>
+            </div>
+          </div>
 
-      <div>
-        <label for="deadline" class="block text-sm font-medium text-gray-700">Deadline</label>
-        <input
-          type="datetime-local"
-          id="deadline"
-          name="deadline"
-          [ngModel]="taskCopy.deadline | date:'yyyy-MM-ddTHH:mm'"
-          (ngModelChange)="taskCopy.deadline = $event"
-          required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        />
-      </div>
+          <div class="row g-4">
+            <div class="col-md-6">
+              <label for="deadline" class="form-label text-secondary fw-medium">Deadline</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <span class="material-icons text-secondary">event</span>
+                </span>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="deadline"
+                  name="deadline"
+                  [ngModel]="taskCopy.deadline | date:'yyyy-MM-ddTHH:mm'"
+                  (ngModelChange)="taskCopy.deadline = $event"
+                  required
+                  #deadlineInput="ngModel"
+                />
+              </div>
+              <div class="text-danger small mt-1" *ngIf="deadlineInput.invalid && (deadlineInput.dirty || deadlineInput.touched)">
+                Deadline is required
+              </div>
+            </div>
 
-      <div>
-        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-        <select
-          id="status"
-          name="status"
-          [(ngModel)]="taskCopy.status"
-          required
-          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-        >
-          <option [value]="TaskStatus.Pending">Pending</option>
-          <option [value]="TaskStatus.InProgress">In Progress</option>
-          <option [value]="TaskStatus.Completed">Completed</option>
-        </select>
-      </div>
+            <div class="col-md-6">
+              <label for="status" class="form-label text-secondary fw-medium">Status</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light">
+                  <span class="material-icons text-secondary">flag</span>
+                </span>
+                <select
+                  class="form-select"
+                  id="status"
+                  name="status"
+                  [(ngModel)]="taskCopy.status"
+                  required
+                  #statusInput="ngModel"
+                >
+                  <option [value]="TaskStatus.Pending">📋 Pending</option>
+                  <option [value]="TaskStatus.InProgress">🔄 In Progress</option>
+                  <option [value]="TaskStatus.Completed">✅ Completed</option>
+                </select>
+              </div>
+              <div class="text-danger small mt-1" *ngIf="statusInput.invalid && (statusInput.dirty || statusInput.touched)">
+                Status is required
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="flex justify-end space-x-3 mt-6">
-        <button
-          type="button"
-          (click)="onCancel()"
-          class="px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          [disabled]="!taskForm.form.valid"
-          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 transition-colors"
-        >
-          {{ task.id ? 'Update' : 'Create' }}
-        </button>
-      </div>
-    </form>
+  <div class="modal-footer bg-light border-top-0 p-4 rounded-bottom-xxl">
+          <button
+            type="button"
+            class="btn btn-light btn-lg px-4 hover-lift"
+            (click)="onCancel()"
+          >
+            <span class="material-icons me-2">close</span>
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-accent btn-lg px-4 ms-2 hover-lift"
+            [disabled]="!taskForm.form.valid || taskForm.pristine"
+          >
+            <span class="material-icons me-2">{{ task.id ? 'save' : 'add_circle' }}</span>
+            {{ task.id ? 'Update Task' : 'Create Task' }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+<div class="modal-backdrop fade show"></div>

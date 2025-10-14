@@ -1,0 +1,25 @@
+.sidebar {
+  min-width: 220px;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+.sidebar-header .avatar {
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.sidebar-nav .nav-link {
+  color: var(--text-muted);
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: background .2s, color .2s;
+}
+.sidebar-nav .nav-link.active, .sidebar-nav .nav-link:hover {
+  background: color-mix(in oklab, var(--accent) 12%, white);
+  color: var(--accent);
+}
+.sidebar-footer .btn {
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: var(--shadow-soft);
+}

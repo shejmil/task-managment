@@ -1,0 +1,17 @@
+
+$primary: #3b82f6; 
+$secondary: #64748b;
+$success: #10b981;
+$warning: #f59e0b;
+$danger: #ef4444;
+$info: #0ea5e9;
+
+$body-bg: #f7f8fb;
+$body-color: #111827;
+
+$enable-shadows: true;
+$border-radius: 0.75rem;
+$border-radius-lg: 1rem;
+$btn-border-radius: 0.625rem;
+
+@use "bootstrap" as *;

@@ -4,46 +4,16 @@ import { Router } from '@angular/router';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { Calendar, EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import { TaskService } from '../../../core/services/task.service';
-import { Task, TaskStatus } from '../../../core/models/task.model';
+import { Task, TaskStatus } from '../../core/models/task.model';
+import { TaskService } from '../../core/services/task.service';
+
 
 @Component({
   selector: 'app-calendar-view',
   standalone: true,
   imports: [CommonModule, FullCalendarModule],
-  template: `
-    <div class="container mx-auto p-4">
-      <div class="mb-6">
-        <h1 class="text-2xl font-bold">Task Calendar</h1>
-      </div>
-
-      <div class="bg-white rounded-lg shadow p-6">
-        <full-calendar
-          [options]="calendarOptions"
-        ></full-calendar>
-      </div>
-    </div>
-  `,
-  styles: [`
-    :host ::ng-deep .fc-event {
-      cursor: pointer;
-    }
-    :host ::ng-deep .task-status-pending {
-      background-color: #fef3c7;
-      border-color: #f59e0b;
-      color: #92400e;
-    }
-    :host ::ng-deep .task-status-in-progress {
-      background-color: #dbeafe;
-      border-color: #3b82f6;
-      color: #1e40af;
-    }
-    :host ::ng-deep .task-status-completed {
-      background-color: #dcfce7;
-      border-color: #22c55e;
-      color: #166534;
-    }
-  `]
+  templateUrl: './calendar-view.component.html',
+  styleUrls: ['./calendar-view.component.scss']
 })
 export class CalendarViewComponent implements OnInit {
   calendarOptions: any = {
@@ -99,4 +69,8 @@ export class CalendarViewComponent implements OnInit {
     const taskId = arg.event.id;
     this.router.navigate(['/tasks', taskId]);
   }
+
+  viewPrev() { (document.querySelector('.fc-prev-button') as HTMLButtonElement)?.click(); }
+  viewNext() { (document.querySelector('.fc-next-button') as HTMLButtonElement)?.click(); }
+  viewToday() { (document.querySelector('.fc-today-button') as HTMLButtonElement)?.click(); }
 }

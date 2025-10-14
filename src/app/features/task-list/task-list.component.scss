@@ -1,8 +1,32 @@
-/* Add any component-specific styles here */
-.task-card {
+/* Bootstrap enhancements */
+.card {
   transition: all 0.2s ease-in-out;
   
   &:hover {
     transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
   }
+}
+
+.btn-group {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    
+    .material-icons {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Custom hover shadow class
+.hover-shadow {
+  &:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  }
+}
+
+// Custom transitions
+.transition-all {
+  transition: all 0.2s ease-in-out;
 }

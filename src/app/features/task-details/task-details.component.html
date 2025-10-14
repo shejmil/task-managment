@@ -1,0 +1,138 @@
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12 mb-4">
+      <a routerLink="/tasks" class="btn btn-link text-decoration-none d-inline-flex align-items-center text-primary">
+        <i class="material-icons me-2">arrow_back</i>
+        Back to Tasks
+      </a>
+    </div>
+  </div>
+
+  @if (task) {
+  <div class="card border-0 rounded-xxl shadow-soft glass overflow-hidden">
+      <!-- Task Header -->
+  <div class="card-header bg-light border-0 py-4 rounded-top-xxl">
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="d-flex align-items-center">
+            <i class="material-icons text-primary fs-2 me-3">assignment</i>
+            <h1 class="h3 mb-0 fw-bold text-dark">{{ task.title }}</h1>
+          </div>
+          <div class="d-flex flex-column align-items-end">
+            <span class="badge rounded-pill px-3 py-2 fs-6"
+              [ngClass]="{
+                'bg-warning-subtle text-warning-emphasis border border-warning': task.status === 'Pending',
+                'bg-info-subtle text-info-emphasis border border-info': task.status === 'In Progress',
+                'bg-success-subtle text-success-emphasis border border-success': task.status === 'Completed'
+              }">
+              <i class="material-icons align-middle me-1 small">
+                {{
+                  task.status === 'Pending' ? 'pending' :
+                  task.status === 'In Progress' ? 'loop' : 'check_circle'
+                }}
+              </i>
+              {{ task.status }}
+            </span>
+            <small class="text-muted mt-2">
+              <i class="material-icons align-middle me-1 small">event</i>
+              Due {{ task.deadline | date:'MMM d, y' }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Description -->
+  <div class="card-body p-4">
+        <h5 class="card-title mb-3 d-flex align-items-center">
+          <i class="material-icons me-2 text-primary">description</i>
+          Description
+        </h5>
+  <div class="bg-light rounded-xl p-4 mb-4 border-subtle shadow-soft">
+          <quill-view-html [content]="task.description" class="ql-editor"></quill-view-html>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section mt-5">
+          <h5 class="card-title mb-4 d-flex align-items-center">
+            <i class="material-icons me-2 text-primary">chat</i>
+            Comments
+          </h5>
+
+          <!-- New Comment -->
+          <div class="new-comment mb-4">
+            <div class="card border-0 shadow-soft rounded-xl hover-lift">
+              <div class="card-body">
+                <quill-editor
+                  [(ngModel)]="newComment"
+                  [styles]="{ minHeight: '120px' }"
+                  [modules]="quillConfig"
+                  [placeholder]="'Share your thoughts...'"
+                  class="mb-3">
+                </quill-editor>
+                <div class="text-end">
+                  <button class="btn btn-primary" (click)="addComment()">
+                    <i class="material-icons align-middle me-2">send</i>
+                    Add Comment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments List -->
+          <div class="comments-list">
+            @for (comment of task.comments; track comment.id) {
+              <div class="card border-0 shadow-soft rounded-xl mb-3 hover-lift">
+                <div class="card-body">
+                  <div class="d-flex mb-3">
+                    <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                         style="width: 40px; height: 40px;">
+                      {{ comment.author[0].toUpperCase() }}
+                    </div>
+                    <div>
+                      <h6 class="mb-1">{{ comment.author }}</h6>
+                      <small class="text-muted">
+                        <i class="material-icons align-middle me-1" style="font-size: 14px;">schedule</i>
+                        {{ comment.createdAt | date:'MMM d, y h:mm a' }}
+                      </small>
+                    </div>
+                  </div>
+                  <div class="comment-content" [innerHTML]="comment.content"></div>
+
+                  <!-- Replies -->
+                  @if (comment.replies.length > 0) {
+                    <div class="replies-list mt-3 ps-4 border-start">
+                      @for (reply of comment.replies; track reply.id) {
+                        <div class="reply bg-light rounded-3 p-3 mb-2">
+                          <div class="d-flex mb-2">
+                            <div class="avatar bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2"
+                                 style="width: 32px; height: 32px; font-size: 14px;">
+                              {{ reply.author[0].toUpperCase() }}
+                            </div>
+                            <div>
+                              <h6 class="mb-0 fs-6">{{ reply.author }}</h6>
+                              <small class="text-muted">
+                                <i class="material-icons align-middle me-1" style="font-size: 12px;">schedule</i>
+                                {{ reply.createdAt | date:'MMM d, y h:mm a' }}
+                              </small>
+                            </div>
+                          </div>
+                          <div class="reply-content ps-5" [innerHTML]="reply.content"></div>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="d-flex justify-content-center align-items-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  }
+</div>

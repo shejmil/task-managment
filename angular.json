@@ -30,8 +30,16 @@
               }
             ],
             "styles": [
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "src/styles/bootstrap-theme.scss",
               "src/styles.scss"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/bootstrap/scss"
+              ]
+            }
           },
           "configurations": {
             "production": {

@@ -5,6 +5,9 @@ export interface Task {
   deadline: Date;
   status: TaskStatus;
   comments: Comment[];
+  category?: string;
+  assignees?: string[];
+  progress?: number;
 }
 
 export enum TaskStatus {

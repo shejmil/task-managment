@@ -1,0 +1,135 @@
+:host {
+  display: block;
+  padding-bottom: 2rem;
+}
+
+.card {
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+  }
+}
+
+:host ::ng-deep {
+  .ql-editor {
+    font-family: inherit;
+    
+    h1, h2, h3 {
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    
+    ul, ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+  
+  .ql-toolbar {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    
+    .ql-formats {
+      margin-right: 0.75rem !important;
+    }
+    
+    button {
+      width: 28px;
+      height: 28px;
+      padding: 2px;
+      
+      &:hover {
+        background-color: #e9ecef;
+        border-radius: 4px;
+      }
+      
+      &.ql-active {
+        background-color: #e9ecef;
+        border-radius: 4px;
+      }
+    }
+  }
+  
+  .ql-container {
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-top: none;
+    font-family: inherit;
+    font-size: 1rem;
+    
+    .ql-editor {
+      padding: 1rem;
+      min-height: 120px;
+      
+      &.ql-blank::before {
+        font-style: normal;
+        color: #6c757d;
+      }
+    }
+  }
+}
+
+// Comments Section Styles
+.comments-section {
+  .comment-content, .reply-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Avatar Styles
+.avatar {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+// Material Icons Alignment
+.material-icons {
+  vertical-align: middle;
+  font-size: 1.25rem;
+}
+
+// Badge Enhancements
+.badge {
+  font-weight: 500;
+  
+  .material-icons {
+    font-size: 1rem;
+  }
+}
+
+// Button Enhancements
+.btn {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  
+  &:active {
+    transform: translateY(1px);
+  }
+  
+  .material-icons {
+    font-size: 1.25rem;
+  }
+}
+
+// Spinner Animation
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-border {
+  animation: spin 1s linear infinite;
+}

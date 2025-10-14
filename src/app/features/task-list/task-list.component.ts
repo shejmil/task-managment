@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TaskService } from '../../../core/services/task.service';
-import { Task } from '../../../core/models/task.model';
-import { TaskDialogComponent } from '../../../shared/components/task-dialog/task-dialog.component';
+import { Task } from '../../core/models/task.model';
+import { TaskService } from '../../core/services/task.service';
+import { TaskDialogComponent } from '../../shared/components/task-dialog/task-dialog.component';
+
 
 @Component({
   selector: 'app-task-list',
@@ -27,6 +28,11 @@ export class TaskListComponent implements OnInit {
     this.taskService.getTasks().subscribe(tasks => {
       this.tasks = tasks;
     });
+  }
+
+  openEditTaskDialog(task: Task): void {
+    this.selectedTask = { ...task };
+    this.showDialog = true;
   }
 
   openAddTaskDialog(): void {

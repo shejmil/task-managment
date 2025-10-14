@@ -1,0 +1,97 @@
+/* Modern Task Manager Theme */
+:root {
+  /* Base colors */
+  --bg: #f7f8fb;
+  --bg-elevated: #ffffffcc; /* semi for glass */
+  --surface: #ffffff;
+  --text: #111827; /* slate-900 */
+  --text-muted: #6b7280; /* slate-500 */
+  --border: #e5e7eb; /* slate-200 */
+
+  /* Accent palette (switch by one line) */
+  --accent: #3b82f6; /* electric blue */
+  /* --accent: #7c3aed;  purple */
+  /* --accent: #14b8a6;  teal */
+  /* --accent: #f97316;  coral */
+
+  /* States */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Effects */
+  --shadow-soft: 0 10px 30px rgba(0,0,0,.08);
+  --shadow-lift: 0 8px 24px rgba(0,0,0,.12);
+  --glass: saturate(180%) blur(12px);
+  --radius: 16px;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Utilities */
+.shadow-soft { box-shadow: var(--shadow-soft) !important; }
+.shadow-lift { box-shadow: var(--shadow-lift) !important; }
+.rounded-xxl { border-radius: calc(var(--radius) + 8px) !important; }
+.rounded-xl { border-radius: var(--radius) !important; }
+.rounded-lg { border-radius: 12px !important; }
+
+.border-subtle { border: 1px solid var(--border) !important; }
+.text-muted-600 { color: var(--text-muted) !important; }
+
+/* Accent helpers */
+.text-accent { color: var(--accent) !important; }
+.bg-accent { background: var(--accent) !important; color: #fff; }
+.badge-accent { background: color-mix(in oklab, var(--accent) 15%, white); color: var(--accent); }
+
+/* Buttons */
+.btn-accent {
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-bg: color-mix(in oklab, var(--accent) 90%, black);
+  --bs-btn-hover-border-color: color-mix(in oklab, var(--accent) 90%, black);
+  --bs-btn-active-bg: color-mix(in oklab, var(--accent) 80%, black);
+  --bs-btn-active-border-color: color-mix(in oklab, var(--accent) 80%, black);
+  color: #fff;
+}
+
+/* Glassmorphism cards */
+.glass {
+  background: var(--bg-elevated);
+  border: 1px solid rgba(255,255,255,.4);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+}
+
+/* Neumorphism soft element */
+.soft-surface {
+  background: var(--surface);
+  box-shadow: 6px 6px 14px rgba(0,0,0,.06), -6px -6px 14px rgba(255,255,255,.9);
+}
+
+/* Hover lift micro-interaction */
+.hover-lift { transition: transform .2s ease, box-shadow .2s ease; }
+.hover-lift:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+
+/* Subtle fade/slide animations */
+.fade-in { animation: fade-in .25s ease both; }
+.slide-up { animation: slide-up .25s ease both; }
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes slide-up { from { transform: translateY(8px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+
+/* Progress pill */
+.progress-pill {
+  height: 8px; border-radius: 999px; background: #e5e7eb; overflow: hidden;
+}
+.progress-pill > span { display:block; height:100%; background: var(--accent); transition: width .3s ease; }
+
+/* Quill theme adjustments (generic) */
+:root .ql-toolbar {
+  border-radius: 12px 12px 0 0; border: 1px solid var(--border); background: #f8fafc;
+}
+:root .ql-container { border-radius: 0 0 12px 12px; border: 1px solid var(--border); border-top: none; }
+:root .ql-editor { min-height: 160px; font-family: inherit; }
+:root .ql-editor.ql-blank::before { color: var(--text-muted); opacity: .9; }
