@@ -1,8 +1,71 @@
 :host { display:block; }
-:host ::ng-deep .fc .fc-toolbar-title { font-weight:600; }
-:host ::ng-deep .fc .fc-daygrid-event { border-radius: 10px; padding: 2px 6px; font-weight: 500; }
-:host ::ng-deep .fc .task-status-pending { background-color: #fff7e6; border-color: #ffc107; color: #a07900; }
-:host ::ng-deep .fc .task-status-in-progress { background-color: #e7f0ff; border-color: #3b82f6; color: #1e40af; }
-:host ::ng-deep .fc .task-status-completed { background-color: #e9f9ef; border-color: #22c55e; color: #166534; }
-:host ::ng-deep .fc .fc-daygrid-day.fc-day-today { background: color-mix(in oklab, var(--accent) 8%, white); }
-:host ::ng-deep .fc .fc-button { border-radius: 8px; }
+
+.card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(99,102,241,.1) !important;
+}
+
+.card-header {
+  background: linear-gradient(135deg, rgba(99,102,241,.08) 0%, rgba(168,85,247,.05) 100%) !important;
+  border-bottom: 1px solid rgba(99,102,241,.1) !important;
+}
+
+:host ::ng-deep .fc .fc-toolbar-title { 
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+:host ::ng-deep .fc .fc-daygrid-event { 
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  transition: all .2s ease;
+}
+
+:host ::ng-deep .fc .fc-daygrid-event:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+:host ::ng-deep .fc .task-status-pending { 
+  background: linear-gradient(135deg, #fff7e6 0%, #ffe8cc 100%);
+  border-color: var(--accent-orange);
+  color: #a07900;
+}
+
+:host ::ng-deep .fc .task-status-in-progress { 
+  background: linear-gradient(135deg, #e7f0ff 0%, #d0e4ff 100%);
+  border-color: var(--accent);
+  color: #1e40af;
+}
+
+:host ::ng-deep .fc .task-status-completed { 
+  background: linear-gradient(135deg, #e9f9ef 0%, #d1f4e0 100%);
+  border-color: var(--success);
+  color: #166534;
+}
+
+:host ::ng-deep .fc .fc-daygrid-day.fc-day-today { 
+  background: linear-gradient(135deg, rgba(99,102,241,.08) 0%, rgba(168,85,247,.05) 100%);
+  border: 2px solid rgba(99,102,241,.2);
+}
+
+:host ::ng-deep .fc .fc-button { 
+  border-radius: 10px;
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 500;
+  transition: all .2s ease;
+}
+
+:host ::ng-deep .fc .fc-button:hover {
+  background: var(--accent-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99,102,241,.3);
+}

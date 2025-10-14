@@ -1,16 +1,12 @@
-<div class="app-container">
-  <nav class="nav-container">
-    <div class="app-container d-flex" style="min-height:100vh;">
-      <app-sidebar class="me-4"></app-sidebar>
-      <div class="flex-grow-1">
-        <main class="main-container">
-          <div class="page-header">
-            <h1>Task Management</h1>
-            <p>Manage your tasks and schedule efficiently</p>
-          </div>
-          <router-outlet></router-outlet>
-        </main>
+<div class="app-container d-flex" style="min-height:100vh;">
+  <app-sidebar></app-sidebar>
+  <div class="flex-grow-1">
+    <main class="main-container">
+      <div class="page-header">
+        <h1>Task Management</h1>
+        <p>Manage your tasks and schedule efficiently</p>
       </div>
-    </div>
-  </nav>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

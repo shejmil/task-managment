@@ -56,7 +56,7 @@ export class TaskDetailsComponent implements OnInit {
     const comment: Comment = {
       id: Date.now().toString(),
       content: this.newComment,
-      author: 'Current User', // TODO: Implement user management
+      author: 'Current User',
       createdAt: new Date(),
       replies: []
     };
@@ -65,5 +65,10 @@ export class TaskDetailsComponent implements OnInit {
     this.taskService.updateTask(this.task).subscribe(() => {
       this.newComment = '';
     });
+  }
+
+  getAvatarColor(index: number): string {
+    const colors = ['#6366f1', '#a855f7', '#ec4899', '#f97316', '#14b8a6', '#3b82f6'];
+    return colors[index % colors.length];
   }
 }

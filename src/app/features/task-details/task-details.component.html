@@ -1,30 +1,44 @@
 <div class="container py-4">
-  <div class="row">
-    <div class="col-12 mb-4">
-      <a routerLink="/tasks" class="btn btn-link text-decoration-none d-inline-flex align-items-center text-primary">
+  <div class="row mb-4">
+    <div class="col-12">
+      <button routerLink="/tasks" class="btn btn-light rounded-xl hover-lift d-inline-flex align-items-center px-4 py-2" style="border: 1px solid rgba(99,102,241,.15); box-shadow: 0 2px 8px rgba(99,102,241,.1);">
         <i class="material-icons me-2">arrow_back</i>
-        Back to Tasks
-      </a>
+        <span class="fw-medium">Back to Tasks</span>
+      </button>
     </div>
   </div>
 
   @if (task) {
-  <div class="card border-0 rounded-xxl shadow-soft glass overflow-hidden">
-      <!-- Task Header -->
-  <div class="card-header bg-light border-0 py-4 rounded-top-xxl">
-        <div class="d-flex justify-content-between align-items-start">
-          <div class="d-flex align-items-center">
-            <i class="material-icons text-primary fs-2 me-3">assignment</i>
-            <h1 class="h3 mb-0 fw-bold text-dark">{{ task.title }}</h1>
+    <div class="card border-0 rounded-xxl overflow-hidden" style="background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%); backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(99,102,241,.15); border: 1px solid rgba(99,102,241,.1);">
+      <div class="card-header border-0 py-4" style="background: linear-gradient(135deg, rgba(99,102,241,.08) 0%, rgba(168,85,247,.05) 100%); border-bottom: 1px solid rgba(99,102,241,.1);">
+        <div class="d-flex justify-content-between align-items-start px-3">
+          <div class="d-flex align-items-center gap-3">
+            <div class="icon-wrapper rounded-circle d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%); box-shadow: 0 4px 16px rgba(99,102,241,.3);">
+              <i class="material-icons text-white fs-3">assignment</i>
+            </div>
+            <div>
+              <h1 class="h3 mb-1 fw-bold" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">{{ task.title }}</h1>
+              @if (task.category) {
+                <span class="badge rounded-pill px-3 py-1"
+                  [ngClass]="{
+                    'accent-purple text-white': task.category === 'Development',
+                    'accent-pink text-white': task.category === 'Design',
+                    'accent-teal text-white': task.category === 'DevOps',
+                    'accent-orange text-white': task.category === 'Documentation'
+                  }">
+                  {{ task.category }}
+                </span>
+              }
+            </div>
           </div>
-          <div class="d-flex flex-column align-items-end">
-            <span class="badge rounded-pill px-3 py-2 fs-6"
+          <div class="d-flex flex-column align-items-end gap-2">
+            <span class="badge rounded-pill px-4 py-2 fs-6 fw-semibold" style="box-shadow: 0 2px 12px rgba(0,0,0,.1);"
               [ngClass]="{
-                'bg-warning-subtle text-warning-emphasis border border-warning': task.status === 'Pending',
-                'bg-info-subtle text-info-emphasis border border-info': task.status === 'In Progress',
-                'bg-success-subtle text-success-emphasis border border-success': task.status === 'Completed'
+                'bg-warning text-dark': task.status === 'Pending',
+                'bg-info text-white': task.status === 'In Progress',
+                'bg-success text-white': task.status === 'Completed'
               }">
-              <i class="material-icons align-middle me-1 small">
+              <i class="material-icons align-middle me-1" style="font-size: 1rem;">
                 {{
                   task.status === 'Pending' ? 'pending' :
                   task.status === 'In Progress' ? 'loop' : 'check_circle'
@@ -32,35 +46,64 @@
               </i>
               {{ task.status }}
             </span>
-            <small class="text-muted mt-2">
-              <i class="material-icons align-middle me-1 small">event</i>
-              Due {{ task.deadline | date:'MMM d, y' }}
-            </small>
+            <div class="d-flex align-items-center gap-2 text-muted">
+              <i class="material-icons" style="font-size: 1rem;">event</i>
+              <small class="fw-medium">Due {{ task.deadline | date:'MMM d, y' }}</small>
+            </div>
+            @if (task.assignees && task.assignees.length > 0) {
+              <div class="d-flex align-items-center gap-1">
+                @for (user of task.assignees; track $index) {
+                  <div class="avatar-chip rounded-circle text-white fw-bold d-flex align-items-center justify-content-center" 
+                    [style.background]="'linear-gradient(135deg, ' + getAvatarColor($index) + ' 0%, ' + getAvatarColor($index + 1) + ' 100%)'"
+                    style="width: 32px; height: 32px; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(0,0,0,.15); margin-left: -8px; border: 2px solid white;">
+                    {{ user[0].toUpperCase() }}
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
       </div>
 
       <!-- Task Description -->
-  <div class="card-body p-4">
-        <h5 class="card-title mb-3 d-flex align-items-center">
-          <i class="material-icons me-2 text-primary">description</i>
-          Description
-        </h5>
-  <div class="bg-light rounded-xl p-4 mb-4 border-subtle shadow-soft">
+      <div class="card-body p-4">
+        <div class="section-header mb-4">
+          <div class="d-flex align-items-center gap-2">
+            <div class="icon-circle rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(99,102,241,.15) 0%, rgba(168,85,247,.1) 100%);">
+              <i class="material-icons text-accent">description</i>
+            </div>
+            <h5 class="m-0 fw-bold">Description</h5>
+          </div>
+        </div>
+        <div class="description-box rounded-xl p-4 mb-5" style="background: linear-gradient(135deg, rgba(99,102,241,.03) 0%, rgba(168,85,247,.02) 100%); border: 1px solid rgba(99,102,241,.1); box-shadow: 0 2px 12px rgba(99,102,241,.05);">
           <quill-view-html [content]="task.description" class="ql-editor"></quill-view-html>
         </div>
 
-        <!-- Comments Section -->
-        <div class="comments-section mt-5">
-          <h5 class="card-title mb-4 d-flex align-items-center">
-            <i class="material-icons me-2 text-primary">chat</i>
-            Comments
-          </h5>
+        @if (task.progress !== undefined) {
+          <div class="progress-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold text-muted">Progress</span>
+              <span class="fw-bold" style="color: var(--accent);">{{ task.progress }}%</span>
+            </div>
+            <div class="progress-pill" style="height: 12px;">
+              <span [style.width.%]="task.progress" style="background: linear-gradient(90deg, var(--accent) 0%, var(--accent-purple) 100%);"></span>
+            </div>
+          </div>
+        }
 
-          <!-- New Comment -->
+        <div class="comments-section">
+          <div class="section-header mb-4">
+            <div class="d-flex align-items-center gap-2">
+              <div class="icon-circle rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background: linear-gradient(135deg, rgba(99,102,241,.15) 0%, rgba(168,85,247,.1) 100%);">
+                <i class="material-icons text-accent">chat</i>
+              </div>
+              <h5 class="m-0 fw-bold">Comments</h5>
+            </div>
+          </div>
+
           <div class="new-comment mb-4">
-            <div class="card border-0 shadow-soft rounded-xl hover-lift">
-              <div class="card-body">
+            <div class="card border-0 rounded-xl overflow-hidden" style="background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%); backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.1) !important;">
+              <div class="card-body p-3">
                 <quill-editor
                   [(ngModel)]="newComment"
                   [styles]="{ minHeight: '120px' }"
@@ -69,54 +112,52 @@
                   class="mb-3">
                 </quill-editor>
                 <div class="text-end">
-                  <button class="btn btn-primary" (click)="addComment()">
-                    <i class="material-icons align-middle me-2">send</i>
-                    Add Comment
+                  <button class="btn btn-accent px-4 py-2 rounded-xl hover-lift" (click)="addComment()" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%); border: none; box-shadow: 0 4px 12px rgba(99,102,241,.3);">
+                    <i class="material-icons align-middle me-2" style="font-size: 1.1rem;">send</i>
+                    <span class="fw-semibold">Add Comment</span>
                   </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Comments List -->
           <div class="comments-list">
             @for (comment of task.comments; track comment.id) {
-              <div class="card border-0 shadow-soft rounded-xl mb-3 hover-lift">
-                <div class="card-body">
+              <div class="card border-0 rounded-xl mb-3 hover-lift" style="background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%); backdrop-filter: blur(10px); box-shadow: 0 4px 16px rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.08) !important; transition: all .3s ease;">
+                <div class="card-body p-4">
                   <div class="d-flex mb-3">
-                    <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
-                         style="width: 40px; height: 40px;">
+                    <div class="avatar rounded-circle text-white fw-bold d-flex align-items-center justify-content-center me-3"
+                         style="width: 44px; height: 44px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%); box-shadow: 0 4px 12px rgba(99,102,241,.3);">
                       {{ comment.author[0].toUpperCase() }}
                     </div>
-                    <div>
-                      <h6 class="mb-1">{{ comment.author }}</h6>
-                      <small class="text-muted">
-                        <i class="material-icons align-middle me-1" style="font-size: 14px;">schedule</i>
+                    <div class="flex-grow-1">
+                      <h6 class="mb-1 fw-bold">{{ comment.author }}</h6>
+                      <small class="text-muted d-flex align-items-center gap-1">
+                        <i class="material-icons" style="font-size: 14px;">schedule</i>
                         {{ comment.createdAt | date:'MMM d, y h:mm a' }}
                       </small>
                     </div>
                   </div>
-                  <div class="comment-content" [innerHTML]="comment.content"></div>
+                  <div class="comment-content ps-5" [innerHTML]="comment.content"></div>
 
-                  <!-- Replies -->
                   @if (comment.replies.length > 0) {
-                    <div class="replies-list mt-3 ps-4 border-start">
+                    <div class="replies-list mt-3 ps-5 border-start" style="border-color: rgba(99,102,241,.2) !important; border-width: 2px !important;">
                       @for (reply of comment.replies; track reply.id) {
-                        <div class="reply bg-light rounded-3 p-3 mb-2">
+                        <div class="reply rounded-xl p-3 mb-2" style="background: rgba(99,102,241,.04);">
                           <div class="d-flex mb-2">
                             <div class="avatar bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-2"
-                                 style="width: 32px; height: 32px; font-size: 14px;">
+                                 style="width: 32px; height: 32px; font-size: 14px; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-blue) 100%) !important; box-shadow: 0 2px 8px rgba(0,0,0,.15);">
                               {{ reply.author[0].toUpperCase() }}
                             </div>
                             <div>
-                              <h6 class="mb-0 fs-6">{{ reply.author }}</h6>
-                              <small class="text-muted">
-                                <i class="material-icons align-middle me-1" style="font-size: 12px;">schedule</i>
+                              <h6 class="mb-0 fs-6 fw-semibold">{{ reply.author }}</h6>
+                              <small class="text-muted d-flex align-items-center gap-1">
+                                <i class="material-icons" style="font-size: 12px;">schedule</i>
                                 {{ reply.createdAt | date:'MMM d, y h:mm a' }}
                               </small>
                             </div>
                           </div>
-                          <div class="reply-content ps-5" [innerHTML]="reply.content"></div>
+                          <div class="reply-content ps-4" [innerHTML]="reply.content"></div>
                         </div>
                       }
                     </div>

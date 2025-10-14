@@ -1,25 +1,65 @@
 .sidebar {
-  min-width: 220px;
-  background: var(--bg-elevated);
-  border-right: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
+  min-width: 240px;
+  max-width: 240px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 100%);
+  border-right: 1px solid rgba(99,102,241,.1);
+  box-shadow: 4px 0 24px rgba(99,102,241,.08);
+  backdrop-filter: blur(20px);
 }
+
 .sidebar-header .avatar {
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  box-shadow: 0 4px 12px rgba(99,102,241,.2);
+  border: 2px solid rgba(99,102,241,.2);
 }
+
 .sidebar-nav .nav-link {
   color: var(--text-muted);
   font-weight: 500;
-  border-radius: 8px;
-  padding: 8px 12px;
-  transition: background .2s, color .2s;
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
-.sidebar-nav .nav-link.active, .sidebar-nav .nav-link:hover {
-  background: color-mix(in oklab, var(--accent) 12%, white);
+
+.sidebar-nav .nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform .3s ease;
+}
+
+.sidebar-nav .nav-link.active::before,
+.sidebar-nav .nav-link:hover::before {
+  transform: scaleY(1);
+}
+
+.sidebar-nav .nav-link.active {
+  background: linear-gradient(135deg, rgba(99,102,241,.15) 0%, rgba(168,85,247,.1) 100%);
   color: var(--accent);
 }
+
+.sidebar-nav .nav-link:hover {
+  background: rgba(99,102,241,.08);
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
 .sidebar-footer .btn {
   font-weight: 600;
   font-size: 1rem;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 4px 16px rgba(99,102,241,.3);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-purple) 100%);
+  border: none;
+  transition: all .3s ease;
+}
+
+.sidebar-footer .btn:hover {
+  box-shadow: 0 6px 24px rgba(99,102,241,.4);
+  transform: translateY(-2px);
 }
